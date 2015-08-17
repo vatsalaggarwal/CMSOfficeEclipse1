@@ -37,7 +37,7 @@ public class Sorting {
 	private static void Merge(int[] arr, int low, int leftArrayEnd, int high)
 	{
 		//printArray(arr);
-		System.out.println(high + "inside merge");
+		//System.out.println(high + "inside merge");
 		int[] temp;
 		int tempLength = high - low + 1;
 		temp = new int[tempLength];
