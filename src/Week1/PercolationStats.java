@@ -1,9 +1,20 @@
 package Week1;
 
 public class PercolationStats {
-
+	Percolation[] perc;
+	
 	public PercolationStats(int N, int T)
 	{
+		if (N <= 0 || T <= 0)
+			throw new java.lang.IllegalArgumentException();
+		
+		perc = new Percolation[T];
+		for (int i = 0; i < T; i++)
+		{
+			perc[i] = new Percolation(N);
+		}
+		
+		int n = StdRandom.uniform(0,5);
 		
 	}
 	
