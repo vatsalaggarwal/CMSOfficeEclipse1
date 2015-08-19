@@ -1,6 +1,8 @@
 
 package Week1;
+import java.io.File;
 import java.util.Random;
+import java.util.Scanner;
 
 /*
  * Merge Sort : Easier way to deal with the three conditions inside the loop, 
@@ -15,6 +17,7 @@ import java.util.Random;
 
 public class Sorting {
 // private static int leftArrayEnd;
+	private static int numberOfComparasions = 0;
 	
 	public static void MergeSort(int[] arr)
 	{
@@ -91,26 +94,43 @@ public class Sorting {
 	{
 		if(high - low > 0)
 		{
-			int pivot = ChoosePivot(arr, low, high);
-			pivot = partition(arr, pivot, low, high);
-			System.out.println(pivot);
-			for( int i : arr)
-				System.out.print(i + " ");
-			System.out.println();
+		    int pivot;
+			pivot = partition(arr, low, high);
+		//	System.out.println(pivot);
+		//	for( int i : arr)
+		//		System.out.print(i + " ");
+		//	System.out.println();
 			QuickSort(arr, low, pivot - 1);
 			QuickSort(arr, pivot + 1, high);
 		}
 	}
 	
-	private static int ChoosePivot(int[] arr, int low, int high)
+/*	private static int ChoosePivot(int[] arr, int low, int high)
 	{
 		Random rgen = new Random();
 		return (rgen.nextInt(high - low + 1) + low);
+	} */
+	
+	private static int ChoosePivot(int[] arr, int low, int high)
+	{
+		int max = Math.max(Math.max(arr[low], arr[high]), arr[(low+high)/2]);
+		int min = Math.min(Math.min(arr[low], arr[high]), arr[(low+high)/2]);
+		if (arr[low] != max && arr[low] != min)
+			return low;
+		else if(arr[high] != max && arr[high] != min)
+			return high;
+		else
+			return (low+high)/2;
 	}
 	
-	private static int partition(int[] arr, int pivot, int low, int high)
+	private static int partition(int[] arr, int low, int high)
 	{
+		
+		int pivot = ChoosePivot(arr, low, high);
+		
 		swap(arr, low, pivot);
+		
+		numberOfComparasions += high - low;
 		
 		pivot = low;
 		int leftArrEnd = low + 1; //left part does not include this
@@ -139,11 +159,22 @@ public class Sorting {
 	
 	
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		int[] arr = {9, 5, 1, 25, 10 , 561 ,55 ,515,1534 ,231 ,521, 52, 0,11, 1, 5, 9};
-		MergeSort(arr);
-		//QuickSort(arr);
+		//MergeSort(arr);
+		int[] arr;
+		Scanner filescanner = new Scanner(new File("/home/vis-176/Downloads/QuickSort.txt"));
+		arr = new int[10000];
+	//	System.out.println(filescanner.hasNextInt());
+		for(int i = 0; i < 10000; i++)
+		{
+			arr[i] = filescanner.nextInt();
+		}
+		System.out.println(arr[9999]);
+		filescanner.close();
+		
+		QuickSort(arr);
+		System.out.println(numberOfComparasions);
 		printArray(arr);
 		
 	}
